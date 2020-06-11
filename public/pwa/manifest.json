@@ -1,0 +1,14 @@
+{
+"short_name": "PWA-code-kuc",
+"name": "PWA code-kuc app",
+"display": "standalone",
+"orientation": "portrait",
+"start_url": "/",
+"icons": [
+	{
+		"src": "images/icon_code.png",
+		"sizes": "192x192",
+		"type": "image/png"
+	}
+]
+}
