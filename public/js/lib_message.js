@@ -53,3 +53,4 @@ function display_notification(title, body ){
 		});
 	}  
 }  
+

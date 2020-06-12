@@ -55,12 +55,14 @@
         <div class="page_info_wrap">
             <ul>
                 <li>このページの機能は、オープンソースで公開しております。<br />
-                    <a  href=' '>
+                    <a  href='https://github.com/kuc-arc-f/vue_spa3a_3message'>
+                        https://github.com/kuc-arc-f/vue_spa3a_3message
                     </a><br />
                     <br />
                 </li>
                 <li>関連ブログ:<br />
-                    <a  href=' '>
+                    <a  href='https://knaka0209.hatenablog.com/entry/lara58_30cross_message'>
+                        https://knaka0209.hatenablog.com/entry/lara58_30cross_message
                     </a><br />
                 </li>
             </ul>
@@ -88,55 +90,23 @@ import {Mixin} from '../../mixin'
 import axios from 'axios'
 import $ from 'jquery'
 
-var USER_ID = 0;
-var URL_BASE ="";
 var TIME_TEXT_STR = 0;
 var MODE_RECEIVE = 1;
 var MODE_SENT = 2;
-/**********************************************
- *
- *********************************************/    
- function set_time_text(){
-	var data = {
-				'user_id': USER_ID,
-				'type': 1,
-            };           
-    var url = URL_BASE + "/api/cross_messages/get_last_item"
-	axios.post(url , data).then(res =>  {
-		var item = res.data
-		if(item.id != null){
-			$("input#time_text").val( item.id );
-            $("input#message_title").val( item.title );
-            //TIME_TEXT_STR = $("input#time_text").val();
-		}else{
-			$("input#time_text").val( 0 );
-		}
-//console.log( item );
-//console.log( TIME_TEXT_STR );
-	});	 
- }
- //timer
-var timer_func = function(){
-    set_time_text();
-};
 
 // notification - check
 window.valid_notification();
 //
 export default {
     mixins:[Mixin],
-    created () {
+    created () {        
         this.check_userState(this.sysConst.STORAGE_KEY_userData, this)
         this.user_id = this.get_userId(this.sysConst.STORAGE_KEY_userData )
-        USER_ID = this.user_id;
-        URL_BASE = this.sysConst.URL_BASE;
-console.log( "uid=" + this.user_id )       
-        var TIMER_SEC = 1000 * 600;
-        //var TIMER_SEC = 1000 * 30;
-        setInterval(timer_func, TIMER_SEC );
-
-        set_time_text();
+console.log( "uid=" + this.user_id )   
+//        this.HTTP_URL = this.sysConst.HTTP_URL     
         this.get_items()
+        this.timerObj = null;
+        TIME_TEXT_STR = 0;
         this.timer_start()
     },
     data () {
@@ -146,6 +116,7 @@ console.log( "uid=" + this.user_id )
             user_id : 0,
             mode : MODE_RECEIVE,
             timerObj : null,
+            //HTTP_URL : "",
         }
     },
     methods: {
@@ -196,9 +167,9 @@ console.log( "uid=" + this.user_id )
             if( 
                 parseFloat(TIME_TEXT_STR) != parseFloat(chk_time) 
                 && chk_time != null
+                && (parseFloat(chk_time) > 0 )
             ){
 //console.log( "#change_time");
-//console.log( "mode=" + this.mode );
                 if( this.mode == MODE_RECEIVE ){
                     var msg = $("input#message_title").val();
                     window.display_notification("Recive Message", msg );
