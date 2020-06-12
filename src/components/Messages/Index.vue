@@ -4,16 +4,16 @@
         <hr class="mt-2 mb-2" />
         <router-link :to="'/messages/new/'" class="btn btn-primary">Create</router-link>
         <hr class="mt-2 mb-2" />
-        <br />
         <!-- tab_mode -->
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a href="#" class="nav-link active" id="nav_receive_tab" v-on:click="change_type(1)">
+                <a class="nav-link active" id="nav_receive_tab" v-on:click="change_type(1)">
                     Receive
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link" id="nav_sent_tab" v-on:click="change_type(2)">
+                <!-- href="#" -->
+                <a  class="nav-link" id="nav_sent_tab" v-on:click="change_type(2)">
                     Sent
                 </a>
             </li>
