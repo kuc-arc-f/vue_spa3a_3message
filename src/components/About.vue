@@ -1,6 +1,9 @@
 <template>
     <div>
         <h1>About</h1>
-        This page describe who we are.1234
+        <p>
+            This page sample app for <br />
+            Vue.js , Vue-CLI , Laravel 5 API
+        </p>
     </div>
 </template>

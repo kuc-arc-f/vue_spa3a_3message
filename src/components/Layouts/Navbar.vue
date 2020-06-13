@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Code-Kuc</a>
+        <a class="navbar-brand" href="/">Code-Kuc</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" >
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -33,10 +33,20 @@
                     </li>					
                 </div>
                 <div v-else>
+                    <!--
                     <li class="nav-item">
                         <a class="nav-link" href="#" v-on:click="proc_logout()">Logout
                         </a>
-                    </li>					
+                    </li>	
+                    -->
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
+                        id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">{{user.name}}</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#" v-on:click="proc_logout()">Logout
+                            </a>
+                        </div><!-- ./dropdown-menu -->
+                    </li>
                 </div>
 				<li class="nav-item">
                     <router-link  to="/about" class="nav-link">About</router-link>
@@ -53,19 +63,24 @@ import {Mixin} from '../../mixin'
 export default {
     mixins:[Mixin],
     created () {
-        this.valid_user = this.valid_login(this.sysConst.STORAGE_KEY_userData)
-        console.log(this.valid_user );
+        this.valid_user = this.valid_login(this.sysConst.STORAGE_KEY_userData )
+        if(this.valid_user ){
+            var d = this.get_exStorage(this.sysConst.STORAGE_KEY_userData )
+            this.user = d[0]
+        }
+//console.log(this.sysConst.HTTP_URL );
     },
     data() {
         return {
             valid_user : null,
+            user : null,
         }
     },    
     methods: {
         proc_logout: function() {
             this.remove_exStorage(this.sysConst.STORAGE_KEY_userData )
-            this.$router.push('/users/login')
-            //console.log('#-Logout')
+            window.location.href = this.sysConst.HTTP_URL
+//            this.$router.push('/users/login')
         },
     }    
 }

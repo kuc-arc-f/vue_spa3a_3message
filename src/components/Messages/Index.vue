@@ -1,8 +1,22 @@
 <template>
     <div class="task_index_wrap">
+        <div class="row" style="margin-top: 10px; ">
+            <div class="col-sm-4"><h3>Messages</h3>
+            </div>
+            <div class="col-sm-4">
+                <router-link :to="'/messages/new/'" class="btn btn-primary">Create</router-link>
+            </div>
+            <div class="col-sm-4">
+                 <button v-on:click="proc_reload()" class="btn btn-outline-primary">
+                     <i class="fas fa-redo-alt"></i> Reload
+                 </button>
+            </div>
+        </div>
+        <!-- 
+        btn-sm
         <h3>Messages- Index:</h3>
         <hr class="mt-2 mb-2" />
-        <router-link :to="'/messages/new/'" class="btn btn-primary">Create</router-link>
+        -->        
         <hr class="mt-2 mb-2" />
         <!-- tab_mode -->
         <ul class="nav nav-tabs">
@@ -182,8 +196,12 @@ console.log( "uid=" + this.user_id )
 			var self = this;
 			this.timerObj = null;
 			this.timerObj = setInterval(function() {self.count()}, 10000)
-		},        
-
+        }, 
+        proc_reload: function(){
+//console.log( "# proc_reload");
+            this.set_exStorage(this.sysConst.KEY_NEXT_ACTION , '/messages' )
+            window.location.href = this.sysConst.HTTP_URL
+        }
     }
 }
 </script>

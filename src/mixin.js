@@ -12,7 +12,9 @@ export const Mixin =  {
                 STORAGE_KEY_tasksData : 'key_tasks_dat',
                 STORAGE_KEY_flash : 'strage_flash_key',
                 STORAGE_KEY_userData : 'key_user_dat',
-                URL_BASE : 'http://localhost:8000'
+                KEY_NEXT_ACTION : 'key_next_action',
+                URL_BASE : 'http://localhost:8000',
+                HTTP_URL : 'http://localhost:8080',
             }
         },
         /* local storage */
@@ -45,7 +47,6 @@ export const Mixin =  {
             }
             return ret;
         },
-
         get_userId(key ){
             var ret = '';
             var store = this.get_exStorage(key)

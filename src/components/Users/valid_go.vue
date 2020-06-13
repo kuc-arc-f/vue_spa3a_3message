@@ -57,7 +57,8 @@ console.log(d.length )
         //console.log(data.user);
                         var param = [ data.user ]
                         self.set_exStorage(self.sysConst.STORAGE_KEY_userData, param )
-                        self.$router.push('/')
+//                        self.$router.push('/')
+                        window.location.href = self.sysConst.HTTP_URL
                     }else{
                         alert("このメールは。通常メールログインで登録済で。Googleログインできません");
                     }
