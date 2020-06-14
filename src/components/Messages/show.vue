@@ -12,6 +12,10 @@
                     <router-link :to="'/messages/reply/' + item.id"
                     class="btn btn-primary btn-sm"><i class="fas fa-reply"></i> Reply
                     </router-link>
+                    &nbsp;&nbsp;
+                    <a v-bind:href="url_export" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-download"></i> &nbsp;export
+                    </a>
                 </div>
             </div>
             <p>
@@ -40,7 +44,9 @@ import axios from 'axios'
 export default {
     mixins:[Mixin],
     created() {
-console.log( this.sysConst.URL_BASE )
+        this.URL_BASE = this.sysConst.URL_BASE;
+        this.url_export = this.URL_BASE + "/api/cross_messages/export?id=" + this.$route.params.id;
+//console.log( this.url_export )
         this.getItem()
     },
     data: function( ) {
@@ -49,6 +55,8 @@ console.log( this.sysConst.URL_BASE )
             item: itemDat,
             editFlg: false,
             updated: false,
+            URL_BASE : "",
+            url_export : "",
         }
     },
     methods: {
@@ -60,7 +68,7 @@ console.log( this.sysConst.URL_BASE )
 //console.log(url)            
             axios.post( url  ,data ).then(res => {
                 this.item = res.data;
-console.log(this.item  );                
+// console.log(this.item.id  );                
             });            
         },
     }

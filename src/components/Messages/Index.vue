@@ -6,18 +6,36 @@
             <div class="col-sm-4">
                 <router-link :to="'/messages/new/'" class="btn btn-primary">Create</router-link>
             </div>
-            <div class="col-sm-4">
-                 <button v-on:click="proc_reload()" class="btn btn-outline-primary">
+            <div class="col-sm-4" style="padding-top: 8px; ">
+                 <button v-on:click="proc_reload()" class="btn btn-outline-primary btn-sm">
                      <i class="fas fa-redo-alt"></i> Reload
                  </button>
+                 &nbsp;&nbsp;
+                <button  class="btn btn-sm btn-outline-primary serach_display_btn mb-0">
+                    <i class="fas fa-arrow-down serach_display_btn"></i>&nbsp;Search
+                </button>                 
             </div>
         </div>
-        <!-- 
-        btn-sm
-        <h3>Messages- Index:</h3>
         <hr class="mt-2 mb-2" />
-        -->        
-        <hr class="mt-2 mb-2" />
+		<div class="search_wrap mt-2" style="display: none; ">
+			<div class="row  mb-0" >            
+				<div class="col-sm-4">
+					<input type="text" class="form-control" placeholder="title"
+					v-model="search_key">
+				</div>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" placeholder="mail"
+					v-model="search_mail">
+				</div>				
+				<div class="col-sm-4">
+					<a href="#" class="btn btn-primary btn-sm"
+					v-on:click="searchTasks()" >Search Go
+					</a>
+				</div>
+			</div>		
+			<hr class="mb-2 mt-2" />
+		</div>        
+
         <!-- tab_mode -->
         <ul class="nav nav-tabs">
             <li class="nav-item">
@@ -110,6 +128,11 @@ var MODE_SENT = 2;
 
 // notification - check
 window.valid_notification();
+$(function(){
+	$( '.serach_display_btn' ).click( function() {
+		$('.search_wrap').css('display','inherit');
+	});
+});
 //
 export default {
     mixins:[Mixin],
@@ -117,7 +140,6 @@ export default {
         this.check_userState(this.sysConst.STORAGE_KEY_userData, this)
         this.user_id = this.get_userId(this.sysConst.STORAGE_KEY_userData )
 console.log( "uid=" + this.user_id )   
-//        this.HTTP_URL = this.sysConst.HTTP_URL     
         this.get_items()
         this.timerObj = null;
         TIME_TEXT_STR = 0;
@@ -130,7 +152,8 @@ console.log( "uid=" + this.user_id )
             user_id : 0,
             mode : MODE_RECEIVE,
             timerObj : null,
-            //HTTP_URL : "",
+            search_key : "",
+            search_mail : "",            
         }
     },
     methods: {
@@ -168,7 +191,8 @@ console.log( "uid=" + this.user_id )
 			}else{
 				$('#nav_sent_tab').addClass('active');
 				$('#nav_receive_tab').removeClass('active');
-				this.get_sent_item();
+                this.get_sent_item();
+                $('.search_wrap').css('display','none');
 			}
         },
 		count: function() {
@@ -198,10 +222,21 @@ console.log( "uid=" + this.user_id )
 			this.timerObj = setInterval(function() {self.count()}, 10000)
         }, 
         proc_reload: function(){
-//console.log( "# proc_reload");
             this.set_exStorage(this.sysConst.KEY_NEXT_ACTION , '/messages' )
             window.location.href = this.sysConst.HTTP_URL
-        }
+        },
+        searchTasks(){
+            var data = {
+                'search_key': this.search_key,
+				'user_id': this.user_id,
+				'search_mail' : this.search_mail,
+            };
+            var url = this.sysConst.URL_BASE +'/api/cross_messages/search'
+            axios.post(url , data ).then(res => {
+// console.log(res.data );
+                this.items = res.data
+            });
+        },        
     }
 }
 </script>
