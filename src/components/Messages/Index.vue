@@ -7,13 +7,16 @@
                 <router-link :to="'/messages/new/'" class="btn btn-primary">Create</router-link>
             </div>
             <div class="col-sm-4" style="padding-top: 8px; ">
-                 <button v-on:click="proc_reload()" class="btn btn-outline-primary btn-sm">
+                 <button v-on:click="proc_reload()" 
+                 class="btn btn-outline-primary btn-sm" style="float :left;">
                      <i class="fas fa-redo-alt"></i> Reload
                  </button>
-                 &nbsp;&nbsp;
-                <button  class="btn btn-sm btn-outline-primary serach_display_btn mb-0">
-                    <i class="fas fa-arrow-down serach_display_btn"></i>&nbsp;Search
-                </button>                 
+                <span class="search_btn_wrap">
+                    <button  class="btn btn-sm btn-outline-primary serach_display_btn mb-0"
+                    style="margin-left : 10px;">
+                        <i class="fas fa-arrow-down serach_display_btn"></i>&nbsp;Search
+                    </button>                 
+                </span>
             </div>
         </div>
         <hr class="mt-2 mb-2" />
@@ -187,12 +190,14 @@ console.log( "uid=" + this.user_id )
 			if(type == MODE_RECEIVE){
 				$('#nav_receive_tab').addClass('active');
 				$('#nav_sent_tab').removeClass('active');	
-				this.get_items();			
+                this.get_items();	
+                $('.search_btn_wrap').css('display','inherit');		
 			}else{
 				$('#nav_sent_tab').addClass('active');
 				$('#nav_receive_tab').removeClass('active');
                 this.get_sent_item();
                 $('.search_wrap').css('display','none');
+                $('.search_btn_wrap').css('display','none');
 			}
         },
 		count: function() {
