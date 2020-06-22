@@ -125,9 +125,36 @@ import {Mixin} from '../../mixin'
 import axios from 'axios'
 import $ from 'jquery'
 
+var USER_ID = 0;
+var URL_BASE ="";
 var TIME_TEXT_STR = 0;
 var MODE_RECEIVE = 1;
 var MODE_SENT = 2;
+/**********************************************
+ *
+ *********************************************/    
+ function set_time_text(){
+	var data = {
+				'user_id': USER_ID,
+				'type': 1,
+            };           
+    var url = URL_BASE + "/api/cross_messages/get_last_item"
+	axios.post(url , data).then(res =>  {
+		var item = res.data
+		if(item.id != null){
+			$("input#time_text").val( item.id );
+            $("input#message_title").val( item.title );
+            //TIME_TEXT_STR = $("input#time_text").val();
+		}else{
+			$("input#time_text").val( 0 );
+		}
+//console.log( item );
+	});	 
+ }
+ //timer
+var timer_func = function(){
+    set_time_text();
+};
 
 // notification - check
 window.valid_notification();
@@ -142,7 +169,12 @@ export default {
     created () {        
         this.check_userState(this.sysConst.STORAGE_KEY_userData, this)
         this.user_id = this.get_userId(this.sysConst.STORAGE_KEY_userData )
-console.log( "uid=" + this.user_id )   
+        USER_ID = this.user_id;
+        URL_BASE = this.sysConst.URL_BASE;
+console.log( "uid=" + this.user_id )       
+        var TIMER_SEC = 1000 * 600;
+//        var TIMER_SEC = 1000 * 30;
+        setInterval(timer_func, TIMER_SEC );        
         this.get_items()
         this.timerObj = null;
         TIME_TEXT_STR = 0;
@@ -170,6 +202,7 @@ console.log( "uid=" + this.user_id )
             axios.post(url, data).then(res =>  {
                 this.items = res.data
                 this.mode = MODE_RECEIVE;
+                set_time_text();
 //console.log( res.data )
             })            
         },

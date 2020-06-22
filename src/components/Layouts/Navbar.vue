@@ -21,7 +21,8 @@
                     <router-link  to="/todos" class="nav-link">Todos</router-link>
                 </li>
                 <li class="nav-item active">
-                    <router-link  to="/messages" class="nav-link">Message</router-link>
+                    <a href="" v-on:click="move_action('/messages');"  class="nav-link">Message
+                    </a>                      
                 </li>
             </ul>
 			<!-- right_nav -->
@@ -82,6 +83,10 @@ export default {
             window.location.href = this.sysConst.HTTP_URL
 //            this.$router.push('/users/login')
         },
+        move_action: function( action  ){
+            this.set_exStorage(this.sysConst.KEY_NEXT_ACTION , action )
+            window.location.href = this.sysConst.HTTP_URL
+        },          
     }    
 }
 </script>

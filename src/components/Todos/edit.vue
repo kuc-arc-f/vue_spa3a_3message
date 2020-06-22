@@ -82,6 +82,9 @@ export default {
             var url = this.sysConst.URL_BASE +'/api/cross_todos/update_todo'
             axios.post(url , task ).then(res => {
                 console.log(res.data );
+                var arr=[ {message : 'Success , save complete'} ]
+                this.set_exStorage( this.sysConst.STORAGE_KEY_flash, arr )
+
                 this.$router.push('/todos')
             });            
 
@@ -93,6 +96,9 @@ export default {
             var url = this.sysConst.URL_BASE +'/api/cross_todos/update_todo'
             axios.post(url , dat ).then(res => {
                 console.log(res.data );
+                var arr=[ {message : 'Success , save complete'} ]
+                this.set_exStorage( this.sysConst.STORAGE_KEY_flash, arr )
+
                 this.$router.push('/todos')
             });   
 
@@ -113,6 +119,9 @@ export default {
             var url = this.sysConst.URL_BASE +'/api/cross_todos/delete_todo'
                 axios.post(url  ,task).then(res => {
 console.log( res.data )
+                var arr=[ {message : 'Success , delete complete'} ]
+                this.set_exStorage( this.sysConst.STORAGE_KEY_flash, arr )
+                
                 this.$router.push('/todos')
             })            
         }

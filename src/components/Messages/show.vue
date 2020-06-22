@@ -1,7 +1,7 @@
 <template>
     <div class="panel panel-default" style="padding-top: 10px;">
-        <router-link :to="'/messages'" class="btn btn-outline-primary mt-2">Back
-        </router-link>
+        <a href="" v-on:click="move_index();"  class="btn btn-outline-primary mt-2">Back
+        </a>         
         <hr class="mt-2 mb-2" />    
         <div class="panel-heading">
             <div class="row">
@@ -71,6 +71,10 @@ export default {
 // console.log(this.item.id  );                
             });            
         },
+        move_index: function(){
+            this.set_exStorage(this.sysConst.KEY_NEXT_ACTION , '/messages' )
+            window.location.href = this.sysConst.HTTP_URL
+        },        
     }
 }
 </script>

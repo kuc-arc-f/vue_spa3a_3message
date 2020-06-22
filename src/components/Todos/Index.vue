@@ -1,5 +1,6 @@
 <template>
     <div>
+         <FlashMessage></FlashMessage>
         <h3>Todos - Index:</h3>        
         <hr class="mt-2 mb-2" />
         <router-link :to="'/todos/new/'" class="btn btn-primary">Create
@@ -65,10 +66,12 @@
 <script>
 import axios from 'axios'
 import {Mixin} from '../../mixin'
+import FlashMessage from '../../components/Layouts/FlashMessage'
 
 //
 export default {
     mixins:[Mixin],
+    components: { FlashMessage },
     created () {
         this.check_userState(this.sysConst.STORAGE_KEY_userData, this)
         this.user_id = this.get_userId(this.sysConst.STORAGE_KEY_userData )

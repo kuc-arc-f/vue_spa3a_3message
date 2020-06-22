@@ -1,5 +1,6 @@
 <template>
     <div class="task_index_wrap">
+        <FlashMessage></FlashMessage>
         <h3>Tasks- Index:</h3>
         <hr class="mt-2 mb-2" />
         <router-link :to="'/tasks/new/'" class="btn btn-primary">Create</router-link>
@@ -45,9 +46,11 @@
 <script>
 import {Mixin} from '../../mixin'
 import axios from 'axios'
+import FlashMessage from '../../components/Layouts/FlashMessage'
 //
 export default {
     mixins:[Mixin],
+    components: { FlashMessage },
     created () {
 // console.log( this.sysConst.URL_BASE )
         this.getTasks()

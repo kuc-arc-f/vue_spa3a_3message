@@ -54,6 +54,9 @@ console.log( 'new.uid ='+ this.user_id )
             var url = this.sysConst.URL_BASE  + "/api/cross_todos/create_todo"
             axios.post( url , task ).then(res => {
                 console.log(res.data );
+                var arr=[ {message : 'Success , save complete'} ]
+                this.set_exStorage( this.sysConst.STORAGE_KEY_flash, arr )
+                                
                 this.$router.push('/todos')
             });            
 

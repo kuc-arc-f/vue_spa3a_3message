@@ -1,7 +1,7 @@
 <template lang="html">
     <div class="task_create_wrap">
-        <router-link :to="'/messages'" class="btn btn-outline-primary mt-2">Back
-        </router-link><br />
+        <a href="" v-on:click="move_index();"  class="btn btn-outline-primary mt-2">Back
+        </a>        
         <h3 class="" style="margin-top: 8px;">Message - 新規作成</h3>
         <hr class="mt-2 mb-2" />
         <div class="form-group">
@@ -88,7 +88,9 @@ console.log( "uid=" + this.user_id )
             var url =  this.sysConst.URL_BASE +'/api/cross_messages/create_message'
             axios.post( url , data ).then(res => {
                 console.log(res.data );
-                this.$router.push('/messages')
+//                this.$router.push('/messages')
+                this.set_exStorage(this.sysConst.KEY_NEXT_ACTION , '/messages' )
+                window.location.href = this.sysConst.HTTP_URL
             }); 
         },
 		search_user(){
@@ -109,7 +111,11 @@ console.log(this.user );
 					alert("nothig user, for mail");
 				}
 			});
-		},        
+        }, 
+        move_index: function(){
+            this.set_exStorage(this.sysConst.KEY_NEXT_ACTION , '/messages' )
+            window.location.href = this.sysConst.HTTP_URL
+        },               
     }
 }
 </script>

@@ -1,36 +1,43 @@
 <template>
     <div>
-        <div id="flash_message" v-if="message">
-            <span class="badge badge-success">
-                <h3 id="h3_msg" style="margin : 15px;">{{ message }}</h3>
+        <div class="flash_message bg-success text-center py-3 my-0" id="flash_message"
+            v-if="message">
+            <span style="color: white;">{{ message }}
             </span>
         </div>
-
     </div>
 </template>
 
+<!-- -->
 <script>
-    export default {
-        created() {
-            this.load_msg()
-        },
-        data() {
-            return {
-                message : '',
-            }
-        },
-        methods: {
-            load_msg() {
-                var dat = exStorage.load( sysConst.STORAGE_KEY_flash )
-                if(dat !=null){
-                    this.message =dat.message;
-                }
-                exStorage.remove( sysConst.STORAGE_KEY_flash )
-//                console.log(sysConst.STORAGE_KEY_flash )
-                console.log(this.message )
-            }            
+import {Mixin} from '../../mixin'
+
+//
+export default {
+    mixins:[Mixin],
+    created() {
+//        console.log( this.sysConst.STORAGE_KEY_flash )
+        this.load_msg()
+    },
+    data() {
+        return {
+            message : '',
         }
+    },
+    methods: {
+        load_msg() {
+            var dat = this.get_exStorage( this.sysConst.STORAGE_KEY_flash )
+//console.log( dat.length )
+
+            if(dat.length > 0){
+                console.log(dat[0])
+                this.message = dat[0].message
+                this.remove_exStorage(this.sysConst.STORAGE_KEY_flash)
+//                this.message =dat.message;
+            }
+        }            
     }
+}
 </script>
 
 <style>

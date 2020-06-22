@@ -69,6 +69,8 @@ export default {
                 console.log(res.data.id );
                 console.log(res.data.title);
                 console.log(res.data.content);
+                var arr=[ {message : 'Success , save complete'} ]
+                this.set_exStorage( this.sysConst.STORAGE_KEY_flash, arr )                
                 this.$router.push('/tasks')
             });            
         },
@@ -79,6 +81,9 @@ export default {
             var url = this.sysConst.URL_BASE +'/api/cross_task/delete_task'
             axios.post(url ,task).then(res => {
                 console.log(res.data.id );
+                var arr=[ {message : 'Success , delete complete'} ]
+                this.set_exStorage( this.sysConst.STORAGE_KEY_flash, arr )                
+
                 this.$router.push('/tasks')
             });
             

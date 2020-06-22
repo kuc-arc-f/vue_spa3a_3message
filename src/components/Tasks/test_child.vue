@@ -1,26 +1,25 @@
 <template>
     <div>
-        <h1>Tasks- test:</h1>
+        <h1>Tasks- testChild:</h1>
         <hr />
         <!--
         test : {{ message }}
             -->
-        <TestChild :child_data=child_data :objects=objects ></TestChild>
+        <TestTimerChild></TestTimerChild>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
 import {Mixin} from '../../mixin'
-//import LibTest from '@/libs/LibTest';
-import TestChild from '../../components/Element/TestChild'
+import TestTimerChild from '../../components/Element/TestTimerChild'
 
 //
 export default {
     mixins:[Mixin],
-    components: { TestChild },
+    components: { TestTimerChild },
     created() {
-//        LibTest.func2()
+        this.getTasks()
 //console.log( this.sysConst.URL_BASE )
     },
     data() {
@@ -28,18 +27,7 @@ export default {
             user : [],
             message : "data: Hello-TestChild-123",
             child_data : "hoge",
-            objects: [
-                {
-                    id: 1,
-                    number: 10,
-                    name: '山田太郎'
-                },
-                {
-                    id: 2,
-                    number: 11,
-                    name: '山田2'
-                },
-            ]
+            items : [],
         }
     },
     methods: {
@@ -48,8 +36,9 @@ export default {
 console.log(url)
             axios.get(url).then(res =>  {
                 this.tasks = res.data
+                this.set_exStorage(this.sysConst.KEY_CHAT_JOIN_ITEMS, this.tasks )
 //                console.log(res.data.length )
-console.log( this.tasks )
+//console.log( this.tasks )
             })            
 
         },
